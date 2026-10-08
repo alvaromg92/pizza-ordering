@@ -1,9 +1,16 @@
+import Navbar from "./components/Navbar"
+import "./App.css"
+
 function App() {
   return (
-    <div>
-      <h1>🍕 Dodo Pizza</h1>
-      <p>Bienvenido a nuestro sistema de pedidos</p>
-    </div>
+    <>
+      <Navbar />
+
+      <main>
+        <h1>Bienvenido a Dodo Pizza</h1>
+        <p>Ordena tu comida desde tu mesa.</p>
+      </main>
+    </>
   )
 }
 
