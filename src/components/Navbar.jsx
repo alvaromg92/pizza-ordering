@@ -1,4 +1,4 @@
-function Navbar() {
+function Navbar({ cart }) {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
@@ -6,7 +6,7 @@ function Navbar() {
       </div>
 
       <div className="navbar-cart">
-        🛒 <span>0</span>
+        🛒 <span>{cart.length}</span>
       </div>
     </nav>
   )
