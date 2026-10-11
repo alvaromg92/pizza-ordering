@@ -1,9 +1,13 @@
+import { useNavigate } from "react-router-dom"
+
 function Cart({
   cart,
   addToCart,
   decreaseQuantity,
   removeProduct
 }) {
+
+  const navigate = useNavigate()
 
   const groupedProducts = cart.reduce(
     (groups, product) => {
@@ -119,7 +123,10 @@ function Cart({
 
       </div>
 
-      <button className="cart-button">
+      <button
+        className="cart-button"
+        onClick={() => navigate("/orden")}
+      >
         Continuar pedido
       </button>
 
