@@ -73,19 +73,19 @@ function Cart({
                   ₡{Number(product.price).toLocaleString()}
                 </p>
 
-                <strong>
-                  Cantidad: {product.quantity}
-                </strong>
-
               </div>
 
-              <div>
+              <div className="cart-controls">
 
                 <button
                   onClick={() => decreaseQuantity(product.id)}
                 >
                   −
                 </button>
+
+                <span>
+                  {product.quantity}
+                </span>
 
                 <button
                   onClick={() => addToCart(product)}
