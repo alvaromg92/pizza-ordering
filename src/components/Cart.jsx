@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 
 function Cart({
   cart,
@@ -8,6 +8,11 @@ function Cart({
 }) {
 
   const navigate = useNavigate()
+
+  const [searchParams] = useSearchParams()
+
+  const mesa = searchParams.get("mesa")
+
 
   const groupedProducts = cart.reduce(
     (groups, product) => {
@@ -125,7 +130,7 @@ function Cart({
 
       <button
         className="cart-button"
-        onClick={() => navigate("/orden")}
+        onClick={() => navigate(`/orden?mesa=${mesa}`)}
       >
         Continuar pedido
       </button>
