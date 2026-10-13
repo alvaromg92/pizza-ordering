@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
+import createOrder from "../services/orderService"
 
 function Order({ cart }) {
 
@@ -10,6 +11,7 @@ function Order({ cart }) {
   const [name, setName] = useState("")
   const [comment, setComment] = useState("")
   const [confirmedOrder, setConfirmedOrder] = useState(null)
+  const [isSaving, setIsSaving] = useState(false)
 
   const groupedProducts = cart.reduce(
     (groups, product) => {
@@ -38,7 +40,7 @@ function Order({ cart }) {
     0
   )
 
-  if (!mesa) {
+  if (!mesa || mesa === "null") {
     return (
       <section className="order">
 
@@ -56,25 +58,51 @@ function Order({ cart }) {
     )
   }
 
-  function handleConfirmOrder() {
+  async function handleConfirmOrder() {
 
     if (!name.trim()) {
       alert("Por favor, escribe tu nombre.")
       return
     }
 
+    if (groupedProducts.length === 0) {
+      alert("Agrega al menos un producto a tu pedido.")
+      return
+    }
+
     const order = {
-      customerName: name,
+      customerName: name.trim(),
       table: mesa,
-      comment: comment,
+      comment: comment.trim(),
       products: groupedProducts,
       total: total,
       status: "pending"
     }
 
-    setConfirmedOrder(order)
+    try {
 
-    console.log(order)
+      setIsSaving(true)
+
+      const orderId = await createOrder(order)
+
+      setConfirmedOrder({
+        ...order,
+        id: orderId
+      })
+
+    } catch (error) {
+
+      console.error("Error al guardar el pedido:", error)
+
+      alert(
+        "No se pudo enviar el pedido. Inténtalo nuevamente."
+      )
+
+    } finally {
+
+      setIsSaving(false)
+
+    }
   }
 
   if (confirmedOrder) {
@@ -226,8 +254,12 @@ function Order({ cart }) {
         <button
           className="order-button"
           onClick={handleConfirmOrder}
+          disabled={isSaving}
         >
-          Confirmar pedido
+          {isSaving
+            ? "Enviando pedido..."
+            : "Confirmar pedido"
+          }
         </button>
 
       </div>

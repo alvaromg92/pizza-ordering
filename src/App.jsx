@@ -5,10 +5,12 @@ import Navbar from "./components/Navbar"
 import Hero from "./components/Hero"
 import Menu from "./components/Menu"
 import Order from "./pages/Order"
+import AdminLogin from "./pages/src/pages/AdminLogin"
 
 import "./App.css"
 
 function App() {
+
   const [cart, setCart] = useState([])
 
   function addToCart(product) {
@@ -19,7 +21,9 @@ function App() {
   }
 
   function decreaseQuantity(productId) {
+
     setCart((currentCart) => {
+
       const index = currentCart.findIndex(
         (product) => product.id === productId
       )
@@ -37,6 +41,7 @@ function App() {
   }
 
   function removeProduct(productId) {
+
     setCart((currentCart) =>
       currentCart.filter(
         (product) => product.id !== productId
@@ -70,6 +75,11 @@ function App() {
         <Route
           path="/orden"
           element={<Order cart={cart} />}
+        />
+
+        <Route
+          path="/admin"
+          element={<AdminLogin />}
         />
 
       </Routes>
